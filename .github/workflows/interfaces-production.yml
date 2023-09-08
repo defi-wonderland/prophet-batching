@@ -29,10 +29,11 @@ jobs:
         run: yarn build
 
       - name: Export Interfaces - ${{ matrix.publish_type }}
-        uses: defi-wonderland/interface-exporter-action@v1.0.0
+        uses: defi-wonderland/interface-exporter-action@v1.x # TODO: Update when bug fix in the last version of interfaces exporter merged
         with:
-          out_dir: "artifacts"
-          publish_type: "${{ matrix.publish_type }}"
+          out_dir: ./artifacts/contracts
+          interfaces_dir: "./contracts"
+          typing_type: "${{ matrix.publish_type }}"
           package_name: "prophet-batching-${{ matrix.publish_type }}"
           destination_dir: "exported-interfaces/prophet-batching-${{ matrix.publish_type }}"
 
