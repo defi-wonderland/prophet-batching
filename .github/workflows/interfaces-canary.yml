@@ -31,9 +31,9 @@ jobs:
       - name: Export Interfaces - ${{ matrix.publish_type }}
         uses: defi-wonderland/interface-exporter-action-private@1c44c6c4e35e902ecbdcb790b287028152ddbc44
         with:
-          out_dir: "artifacts"
-          typing_type: "${{ matrix.publish_type }}"
+          out_dir: ./artifacts/contracts
           interfaces_dir: "./contracts"
+          typing_type: "${{ matrix.publish_type }}"
           package_name: "prophet-batching-${{ matrix.publish_type }}"
           destination_dir: "exported-interfaces/prophet-batching-${{ matrix.publish_type }}"
 
