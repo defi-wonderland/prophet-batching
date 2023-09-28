@@ -23,7 +23,7 @@ contract BatchRequestsForFinalizeData {
     for (uint256 _i = 0; _i < _requests.length; _i++) {
       IOracle.FullRequest memory _request = _requests[_i];
 
-      bytes32 _requestId = keccak256(abi.encodePacked(_request.requester, address(_oracle), _request.nonce));
+      bytes32 _requestId = _request.requestId;
 
       bytes32[] memory _responses = _oracle.getResponseIds(_requestId);
 
