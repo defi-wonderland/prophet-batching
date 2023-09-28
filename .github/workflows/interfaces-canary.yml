@@ -32,7 +32,7 @@ jobs:
         uses: defi-wonderland/interface-exporter-action@v1.2.0
         with:
           out_dir: "artifacts"
-          publish_type: "${{ matrix.publish_type }}"
+          typing_type: "${{ matrix.publish_type }}"
           package_name: "prophet-batching-${{ matrix.publish_type }}"
           destination_dir: "exported-interfaces/prophet-batching-${{ matrix.publish_type }}"
 
