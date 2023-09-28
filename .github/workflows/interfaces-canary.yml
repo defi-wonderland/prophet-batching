@@ -29,10 +29,11 @@ jobs:
         run: yarn version --new-version "0.0.0-${GITHUB_SHA::8}" --no-git-tag-version
 
       - name: Export Interfaces - ${{ matrix.publish_type }}
-        uses: defi-wonderland/interface-exporter-action@v1.2.0
+        uses: defi-wonderland/interface-exporter-action-private@1c44c6c4e35e902ecbdcb790b287028152ddbc44
         with:
           out_dir: "artifacts"
           typing_type: "${{ matrix.publish_type }}"
+          interfaces_dir: "./contracts"
           package_name: "prophet-batching-${{ matrix.publish_type }}"
           destination_dir: "exported-interfaces/prophet-batching-${{ matrix.publish_type }}"
 
