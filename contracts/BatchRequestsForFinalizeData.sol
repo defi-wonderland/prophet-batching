@@ -29,8 +29,8 @@ contract BatchRequestsForFinalizeData {
 
       _returnData[_i] = RequestForFinalizeData({
         requestId: _requestId,
-        responses: _responses,
-        finalizedAt: _request.finalizedAt
+        finalizedAt: _request.finalizedAt,
+        responses: _responses
       });
     }
 
