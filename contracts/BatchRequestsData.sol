@@ -20,11 +20,11 @@ contract BatchRequestsData {
   }
   
   struct RequestData {
-    bytes32 _requestId;
-    IOracle.FullRequest _request;
-    ResponseWithId[] _responses;
-    IOracle.Response _finalizedResponse;
-    IOracle.DisputeStatus _disputeStatus;
+    bytes32 requestId;
+    IOracle.FullRequest request;
+    ResponseWithId[] responses;
+    IOracle.Response finalizedResponse;
+    IOracle.DisputeStatus disputeStatus;
     string requestModuleName;
     string responseModuleName;
     string disputeModuleName;
@@ -40,7 +40,7 @@ contract BatchRequestsData {
     for (uint256 _i = 0; _i < _requests.length; _i++) {
       IOracle.FullRequest memory _request = _requests[_i];
 
-      bytes32 _requestId = keccak256(abi.encodePacked(_request.requester, address(_oracle), _request.nonce));
+      bytes32 _requestId = _request.requestId;
 
       bytes32[] memory _responseIds = _oracle.getResponseIds(_requestId);
       ResponseWithId[] memory _responses = new ResponseWithId[](_responseIds.length);
@@ -67,11 +67,11 @@ contract BatchRequestsData {
       }
 
       _returnData[_i] = RequestData({
-        _requestId: _requestId,
-        _request: _request,
-        _responses: _responses,
-        _finalizedResponse: _finalizedResponse,
-        _disputeStatus: _disputeStatus,
+        requestId: _requestId,
+        request: _request,
+        responses: _responses,
+        finalizedResponse: _finalizedResponse,
+        disputeStatus: _disputeStatus,
         requestModuleName: _getModuleName(_request.requestModule),
         responseModuleName: _getModuleName(_request.responseModule),
         disputeModuleName: _getModuleName(_request.disputeModule),
