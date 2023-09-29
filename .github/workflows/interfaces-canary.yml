@@ -34,7 +34,7 @@ jobs:
           out_dir: ./artifacts/contracts
           interfaces_dir: "./contracts"
           typing_type: "${{ matrix.publish_type }}"
-          package_name: "prophet-batching-${{ matrix.publish_type }}"
+          package_name: "wonderland-prophet-batching-${{ matrix.publish_type }}"
           destination_dir: "exported-interfaces/prophet-batching-${{ matrix.publish_type }}"
 
       - name: Publish
