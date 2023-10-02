@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import {IOracle} from 'prophet-core-abi/contracts/IOracle.sol';
-import {IModule} from 'prophet-core-abi/contracts/IModule.sol';
+import {IOracle} from '@defi-wonderland/prophet-core-abi/contracts/IOracle.sol';
+import {IModule} from '@defi-wonderland/prophet-core-abi/contracts/IModule.sol';
 
 /**
   * @title BatchRequestsData contract
@@ -20,11 +20,11 @@ contract BatchRequestsData {
   }
   
   struct RequestData {
-    bytes32 _requestId;
-    IOracle.FullRequest _request;
-    ResponseWithId[] _responses;
-    IOracle.Response _finalizedResponse;
-    IOracle.DisputeStatus _disputeStatus;
+    bytes32 requestId;
+    IOracle.FullRequest request;
+    ResponseWithId[] responses;
+    IOracle.Response finalizedResponse;
+    IOracle.DisputeStatus disputeStatus;
     string requestModuleName;
     string responseModuleName;
     string disputeModuleName;
@@ -40,9 +40,7 @@ contract BatchRequestsData {
     for (uint256 _i = 0; _i < _requests.length; _i++) {
       IOracle.FullRequest memory _request = _requests[_i];
 
-      bytes32 _requestId = keccak256(abi.encodePacked(_request.requester, address(_oracle), _request.nonce));
-
-      bytes32[] memory _responseIds = _oracle.getResponseIds(_requestId);
+      bytes32[] memory _responseIds = _oracle.getResponseIds(_request.requestId);
       ResponseWithId[] memory _responses = new ResponseWithId[](_responseIds.length);
 
       for (uint256 _j = 0; _j < _responseIds.length; _j++) {
@@ -58,7 +56,7 @@ contract BatchRequestsData {
         });
       }
 
-      IOracle.Response memory _finalizedResponse = _oracle.getFinalizedResponse(_requestId);
+      IOracle.Response memory _finalizedResponse = _oracle.getFinalizedResponse(_request.requestId);
 
       IOracle.DisputeStatus _disputeStatus = IOracle.DisputeStatus.None;
       if (_responseIds.length > 0) {
@@ -67,11 +65,11 @@ contract BatchRequestsData {
       }
 
       _returnData[_i] = RequestData({
-        _requestId: _requestId,
-        _request: _request,
-        _responses: _responses,
-        _finalizedResponse: _finalizedResponse,
-        _disputeStatus: _disputeStatus,
+        requestId: _request.requestId,
+        request: _request,
+        responses: _responses,
+        finalizedResponse: _finalizedResponse,
+        disputeStatus: _disputeStatus,
         requestModuleName: _getModuleName(_request.requestModule),
         responseModuleName: _getModuleName(_request.responseModule),
         disputeModuleName: _getModuleName(_request.disputeModule),
