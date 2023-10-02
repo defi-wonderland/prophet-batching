@@ -16,7 +16,7 @@
     "@types/mocha": ">=9.1.0",
     "chai": "4.2.0",
     "hardhat-gas-reporter": "1.0.8",
-    "prophet-core-abi": "0.0.0-51d66dc7",
+    "@defi-wonderland/prophet-core-abi": "0.0.0-f5236cfc",
     "solidity-coverage": "0.8.1",
     "ts-node": "10.9.1",
     "typechain": "8.2.0",
