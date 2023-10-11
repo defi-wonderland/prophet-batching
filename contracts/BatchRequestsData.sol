@@ -5,11 +5,10 @@ import {IOracle} from '@defi-wonderland/prophet-core-abi/contracts/IOracle.sol';
 import {IModule} from '@defi-wonderland/prophet-core-abi/contracts/IModule.sol';
 
 /**
-  * @title BatchRequestsData contract
-  * @notice This contract is used to get batch requests data from the oracle contract
-  */
+ * @title BatchRequestsData contract
+ * @notice This contract is used to get batch requests data from the oracle contract
+ */
 contract BatchRequestsData {
-
   struct ResponseWithId {
     bytes32 responseId;
     uint256 createdAt;
@@ -18,7 +17,7 @@ contract BatchRequestsData {
     bytes32 disputeId;
     bytes response;
   }
-  
+
   struct RequestData {
     bytes32 requestId;
     IOracle.FullRequest request;
@@ -46,13 +45,13 @@ contract BatchRequestsData {
       for (uint256 _j = 0; _j < _responseIds.length; _j++) {
         IOracle.Response memory _response = _oracle.getResponse(_responseIds[_j]);
 
-        _responses[_j] = ResponseWithId ({ 
+        _responses[_j] = ResponseWithId({
           responseId: _responseIds[_j],
           createdAt: _response.createdAt,
           proposer: _response.proposer,
           requestId: _response.requestId,
           disputeId: _response.disputeId,
-          response: _response.response 
+          response: _response.response
         });
       }
 

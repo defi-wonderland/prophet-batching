@@ -5,9 +5,9 @@ import {IOracle} from '@defi-wonderland/prophet-core-abi/contracts/IOracle.sol';
 import {IModule} from '@defi-wonderland/prophet-core-abi/contracts/IModule.sol';
 
 /**
-  * @title BatchRequestsForFinalizeData contract
-  * @notice This contract is used to get batch requests data from the oracle contract
-  */
+ * @title BatchRequestsForFinalizeData contract
+ * @notice This contract is used to get batch requests data from the oracle contract
+ */
 contract BatchRequestsForFinalizeData {
   struct RequestForFinalizeData {
     bytes32 requestId;
@@ -27,11 +27,8 @@ contract BatchRequestsForFinalizeData {
 
       bytes32[] memory _responses = _oracle.getResponseIds(_requestId);
 
-      _returnData[_i] = RequestForFinalizeData({
-        requestId: _requestId,
-        finalizedAt: _request.finalizedAt,
-        responses: _responses
-      });
+      _returnData[_i] =
+        RequestForFinalizeData({requestId: _requestId, finalizedAt: _request.finalizedAt, responses: _responses});
     }
 
     // encode return data
