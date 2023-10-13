@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import {IOracle} from '@defi-wonderland/prophet-core-abi/contracts/IOracle.sol';
-import {IModule} from '@defi-wonderland/prophet-core-abi/contracts/IModule.sol';
+import {IOracle} from '@defi-wonderland/prophet-core-abi/solidity/interfaces/IOracle.sol';
+import {IModule} from '@defi-wonderland/prophet-core-abi/solidity/interfaces/IModule.sol';
 
 /**
  * @title BatchRequestsForFinalizeData contract
@@ -27,8 +27,7 @@ contract BatchRequestsForFinalizeData {
 
       bytes32[] memory _responses = _oracle.getResponseIds(_requestId);
 
-      _returnData[_i] =
-        RequestForFinalizeData({requestId: _requestId, finalizedAt: _request.finalizedAt, responses: _responses});
+      _returnData[_i] = RequestForFinalizeData({requestId: _requestId, finalizedAt: _request.finalizedAt, responses: _responses});
     }
 
     // encode return data

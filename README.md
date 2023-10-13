@@ -5,13 +5,16 @@ This repository contains Prophet contracts for batching the RPC calls.
 If you're unfamiliar with how RPC batching works, please read [this thread](https://twitter.com/libevm/status/1610214982452449280).
 
 ## Contracts
+
 - `BatchDisputesData`: returns all disputes of multiple requests
 - `BatchRequestsData`: returns requests data combined with responses
 - `BatchRequestsForFinalizeData`: returns ids of requests and their finalization status, also includes response ids
 - `BatchResponsesData`: returns responses of a given request
 
 ## Usage
+
 1. Install the [`@defi-wonderland/prophet-batching-abi`](https://www.npmjs.com/package/@defi-wonderland/prophet-batching-abi) package:
+
 ```bash
 yarn add @defi-wonderland/prophet-batching-abi
 ```

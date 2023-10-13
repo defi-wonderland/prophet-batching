@@ -1,23 +1,39 @@
 {
   "name": "prophet-batching-private",
   "scripts": {
-    "build": "npx hardhat compile"
+    "build": "npx hardhat compile",
+    "lint:check": "cross-env solhint 'solidity/**/*.sol' && cross-env prettier --check './**'",
+    "lint:fix": "sort-package-json && cross-env prettier --write './**' && cross-env solhint --fix 'solidity/**/*.sol'"
+  },
+  "lint-staged": {
+    "*.{js,css,md,ts,sol,yml}": "prettier --write",
+    "*.sol": "cross-env solhint --fix 'solidity/**/*.sol'",
+    "package.json": "sort-package-json"
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "3.0.0",
-    "hardhat": "2.17.2",
+    "@commitlint/cli": "17.4.2",
+    "@commitlint/config-conventional": "17.4.2",
+    "@defi-wonderland/prophet-core-abi": "0.0.0-bb56cdd7",
     "@nomicfoundation/hardhat-chai-matchers": "2.0.0",
     "@nomicfoundation/hardhat-ethers": "3.0.0",
     "@nomicfoundation/hardhat-network-helpers": "1.0.0",
+    "@nomicfoundation/hardhat-toolbox": "3.0.0",
     "@nomicfoundation/hardhat-verify": "1.0.0",
     "@typechain/ethers-v6": "0.4.0",
     "@typechain/hardhat": "8.0.0",
     "@types/chai": "4.2.0",
     "@types/mocha": ">=9.1.0",
     "chai": "4.2.0",
+    "cross-env": "7.0.3",
+    "hardhat": "2.17.2",
     "hardhat-gas-reporter": "1.0.8",
-    "@defi-wonderland/prophet-core-abi": "0.0.0-f5236cfc",
+    "lint-staged": "13.1.0",
+    "prettier": "2.8.3",
+    "prettier-plugin-solidity": "1.1.1",
+    "solhint-plugin-defi-wonderland": "1.1.0",
+    "solhint-plugin-prettier": "0.0.5",
     "solidity-coverage": "0.8.1",
+    "sort-package-json": "2.1.0",
     "ts-node": "10.9.1",
     "typechain": "8.2.0",
     "typescript": "5.2.2"

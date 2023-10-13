@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        publish_type: ["abi"]
+        publish_type: ['abi']
 
     steps:
       - uses: actions/checkout@v3
@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          registry-url: "https://registry.npmjs.org"
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
         run: yarn --frozen-lockfile
@@ -32,10 +32,10 @@ jobs:
         uses: defi-wonderland/interface-exporter-action@v1.2.1
         with:
           out_dir: ./artifacts/contracts
-          interfaces_dir: "./contracts"
-          typing_type: "${{ matrix.publish_type }}"
-          package_name: "@defi-wonderland/prophet-batching-${{ matrix.publish_type }}"
-          destination_dir: "exported-interfaces/prophet-batching-${{ matrix.publish_type }}"
+          interfaces_dir: './contracts'
+          typing_type: '${{ matrix.publish_type }}'
+          package_name: '@defi-wonderland/prophet-batching-${{ matrix.publish_type }}'
+          destination_dir: 'exported-interfaces/prophet-batching-${{ matrix.publish_type }}'
 
       - name: Publish
         run: cd exported-interfaces/prophet-batching-${{ matrix.publish_type }} && npm publish --access public --tag canary

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import {IOracle} from '@defi-wonderland/prophet-core-abi/contracts/IOracle.sol';
-import {IModule} from '@defi-wonderland/prophet-core-abi/contracts/IModule.sol';
+import {IOracle} from '@defi-wonderland/prophet-core-abi/solidity/interfaces/IOracle.sol';
+import {IModule} from '@defi-wonderland/prophet-core-abi/solidity/interfaces/IModule.sol';
 
 /**
  * @title BatchDisputeData contract
