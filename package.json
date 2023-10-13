@@ -2,8 +2,10 @@
   "name": "prophet-batching-private",
   "scripts": {
     "build": "npx hardhat compile",
+    "postinstall": "husky install",
     "lint:check": "cross-env solhint 'solidity/**/*.sol' && cross-env prettier --check './**'",
-    "lint:fix": "sort-package-json && cross-env prettier --write './**' && cross-env solhint --fix 'solidity/**/*.sol'"
+    "lint:fix": "sort-package-json && cross-env prettier --write './**' && cross-env solhint --fix 'solidity/**/*.sol'",
+    "prepare": "husky install && wonderland-crypto-husky-checks install"
   },
   "lint-staged": {
     "*.{js,css,md,ts,sol,yml}": "prettier --write",
@@ -13,6 +15,7 @@
   "devDependencies": {
     "@commitlint/cli": "17.4.2",
     "@commitlint/config-conventional": "17.4.2",
+    "@defi-wonderland/crypto-husky-checks": "0.0.0-29a10090",
     "@defi-wonderland/prophet-core-abi": "0.0.0-bb56cdd7",
     "@nomicfoundation/hardhat-chai-matchers": "2.0.0",
     "@nomicfoundation/hardhat-ethers": "3.0.0",
@@ -27,6 +30,7 @@
     "cross-env": "7.0.3",
     "hardhat": "2.17.2",
     "hardhat-gas-reporter": "1.0.8",
+    "husky": "8.0.2",
     "lint-staged": "13.1.0",
     "prettier": "2.8.3",
     "prettier-plugin-solidity": "1.1.1",
