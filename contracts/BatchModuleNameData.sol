@@ -7,7 +7,7 @@ import {IModule} from '@defi-wonderland/prophet-core-abi/solidity/interfaces/IMo
  * @title BatchResponsesData contract
  * @notice This contract is used to get batch responses data from the oracle contract
  */
-contract BatchModuleNames {
+contract BatchModuleNameData {
   constructor(IModule[] memory _modules) {
     string[] memory _returnData = new string[](_modules.length);
 
