@@ -6,28 +6,26 @@ import {IModule} from '@defi-wonderland/prophet-core-abi/solidity/interfaces/IMo
 
 /**
  * @title BatchRequestsForFinalizeData contract
- * @notice This contract is used to get batch requests data from the oracle contract
+ * @notice This contract is used to get batch requests min data from the oracle contract to finalize the requests
  */
 contract BatchRequestsForFinalizeData {
   struct RequestForFinalizeData {
     bytes32 requestId;
     uint256 finalizedAt;
-    bytes32[] responses;
+    bytes32[] responseIds;
   }
 
   constructor(IOracle _oracle, uint256 _startFrom, uint256 _amount) {
     RequestForFinalizeData[] memory _returnData = new RequestForFinalizeData[](_amount);
 
-    IOracle.FullRequest[] memory _requests = _oracle.listRequests(_startFrom, _amount);
+    bytes32[] memory _requestsIds = _oracle.listRequestIds(_startFrom, _amount);
 
-    for (uint256 _i = 0; _i < _requests.length; _i++) {
-      IOracle.FullRequest memory _request = _requests[_i];
-
-      bytes32 _requestId = _request.requestId;
+    for (uint256 _i = 0; _i < _requestsIds.length; _i++) {
+      bytes32 _requestId = _requestsIds[_i];
 
       bytes32[] memory _responses = _oracle.getResponseIds(_requestId);
 
-      _returnData[_i] = RequestForFinalizeData({requestId: _requestId, finalizedAt: _request.finalizedAt, responses: _responses});
+      _returnData[_i] = RequestForFinalizeData({requestId: _requestId, finalizedAt: _oracle.finalizedAt(_requestId), responseIds: _responses});
     }
 
     // encode return data

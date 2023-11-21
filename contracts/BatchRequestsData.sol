@@ -9,71 +9,52 @@ import {IModule} from '@defi-wonderland/prophet-core-abi/solidity/interfaces/IMo
  * @notice This contract is used to get batch requests data from the oracle contract
  */
 contract BatchRequestsData {
-  struct ResponseWithId {
+  struct ResponseData {
     bytes32 responseId;
     uint256 createdAt;
-    address proposer;
-    bytes32 requestId;
     bytes32 disputeId;
-    bytes response;
   }
 
   struct RequestData {
     bytes32 requestId;
-    IOracle.FullRequest request;
-    ResponseWithId[] responses;
-    IOracle.Response finalizedResponse;
+    ResponseData[] responses;
+    bytes32 finalizedResponseId;
     IOracle.DisputeStatus disputeStatus;
-    string requestModuleName;
-    string responseModuleName;
-    string disputeModuleName;
-    string resolutionModuleName;
-    string finalityModuleName;
   }
 
   constructor(IOracle _oracle, uint256 _startFrom, uint256 _amount) {
     RequestData[] memory _returnData = new RequestData[](_amount);
 
-    IOracle.FullRequest[] memory _requests = _oracle.listRequests(_startFrom, _amount);
+    bytes32[] memory _requestsIds = _oracle.listRequestIds(_startFrom, _amount);
 
-    for (uint256 _i = 0; _i < _requests.length; _i++) {
-      IOracle.FullRequest memory _request = _requests[_i];
-
-      bytes32[] memory _responseIds = _oracle.getResponseIds(_request.requestId);
-      ResponseWithId[] memory _responses = new ResponseWithId[](_responseIds.length);
+    for (uint256 _i = 0; _i < _requestsIds.length; _i++) {
+      bytes32 _requestId = _requestsIds[_i];
+      bytes32[] memory _responseIds = _oracle.getResponseIds(_requestId);
+      ResponseData[] memory _responses = new ResponseData[](_responseIds.length);
 
       for (uint256 _j = 0; _j < _responseIds.length; _j++) {
-        IOracle.Response memory _response = _oracle.getResponse(_responseIds[_j]);
+        bytes32 _responseId = _responseIds[_j];
 
-        _responses[_j] = ResponseWithId({
-          responseId: _responseIds[_j],
-          createdAt: _response.createdAt,
-          proposer: _response.proposer,
-          requestId: _response.requestId,
-          disputeId: _response.disputeId,
-          response: _response.response
+        _responses[_j] = ResponseData({
+          responseId: _responseId,
+          createdAt: _oracle.createdAt(_responseId),
+          disputeId: _oracle.disputeOf(_responseId)
         });
       }
 
-      IOracle.Response memory _finalizedResponse = _oracle.getFinalizedResponse(_request.requestId);
+      bytes32 _finalizedResponseId = _oracle.getFinalizedResponseId(_requestId);
 
       IOracle.DisputeStatus _disputeStatus = IOracle.DisputeStatus.None;
       if (_responseIds.length > 0) {
         bytes32 _latestResponseId = _responseIds[_responseIds.length - 1];
-        _disputeStatus = _oracle.getDispute(_oracle.disputeOf(_latestResponseId)).status;
+        _disputeStatus = _oracle.disputeStatus(_oracle.disputeOf(_latestResponseId));
       }
 
       _returnData[_i] = RequestData({
-        requestId: _request.requestId,
-        request: _request,
+        requestId: _requestId,
         responses: _responses,
-        finalizedResponse: _finalizedResponse,
-        disputeStatus: _disputeStatus,
-        requestModuleName: _getModuleName(_request.requestModule),
-        responseModuleName: _getModuleName(_request.responseModule),
-        disputeModuleName: _getModuleName(_request.disputeModule),
-        resolutionModuleName: _getModuleName(_request.resolutionModule),
-        finalityModuleName: _getModuleName(_request.finalityModule)
+        finalizedResponseId: _finalizedResponseId,
+        disputeStatus: _disputeStatus
       });
     }
 

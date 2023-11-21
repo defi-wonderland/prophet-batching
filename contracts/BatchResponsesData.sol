@@ -8,12 +8,23 @@ import {IOracle} from '@defi-wonderland/prophet-core-abi/solidity/interfaces/IOr
  * @notice This contract is used to get batch responses data from the oracle contract
  */
 contract BatchResponsesData {
+  struct ResponseData {
+    bytes32 responseId;
+    uint256 createdAt;
+    bytes32 disputeId;
+  }
+
   constructor(IOracle _oracle, bytes32 _requestId) {
     bytes32[] memory _responseIds = _oracle.getResponseIds(_requestId);
-    IOracle.Response[] memory _returnData = new IOracle.Response[](_responseIds.length);
+    ResponseData[] memory _returnData = new ResponseData[](_responseIds.length);
 
     for (uint256 _i = 0; _i < _responseIds.length; _i++) {
-      IOracle.Response memory _response = _oracle.getResponse(_responseIds[_i]);
+      bytes32 _responseId = _responseIds[_i];
+      ResponseData memory _response = ResponseData({
+        responseId: _responseIds[_i],
+        createdAt: _oracle.createdAt(_responseId),
+        disputeId: _oracle.disputeOf(_responseId)
+      });
       _returnData[_i] = _response;
     }
 
