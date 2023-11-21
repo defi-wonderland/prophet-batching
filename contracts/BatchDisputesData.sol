@@ -13,18 +13,17 @@ contract BatchDisputesData {
     bytes32 disputeId;
     uint256 createdAt;
     bytes32 responseId;
-    bytes32 requestId;
     IOracle.DisputeStatus status;
   }
 
-  struct DisputesData {
+  struct DisputeData {
     bytes32 requestId;
     bool isFinalized;
     DisputeWithId[] disputes;
   }
 
   constructor(IOracle _oracle, uint256 _startFrom, uint256 _amount) {
-    DisputesData[] memory _returnData = new DisputesData[](_amount);
+    DisputeData[] memory _returnData = new DisputeData[](_amount);
 
     bytes32[] memory _requestsIds = _oracle.listRequestIds(_startFrom, _amount);
 
@@ -43,7 +42,6 @@ contract BatchDisputesData {
           disputeId: _disputeId,
           createdAt: _oracle.createdAt(_disputeId),
           responseId: _responseId,
-          requestId: _requestId,
           status: _oracle.disputeStatus(_disputeId)
         });
       }
