@@ -2,7 +2,6 @@
 pragma solidity ^0.8.19;
 
 import {IOracle} from '@defi-wonderland/prophet-core-abi/solidity/interfaces/IOracle.sol';
-import {IModule} from '@defi-wonderland/prophet-core-abi/solidity/interfaces/IModule.sol';
 
 /**
  * @title BatchRequestsData contract
@@ -66,9 +65,5 @@ contract BatchRequestsData {
       let dataStart := add(data, 32) // abi.encode adds an additional offset
       return(dataStart, sub(msize(), dataStart))
     }
-  }
-
-  function _getModuleName(IModule _module) internal view returns (string memory) {
-    return address(_module) == address(0) ? '' : _module.moduleName();
   }
 }
