@@ -16,7 +16,7 @@
     "@commitlint/cli": "17.4.2",
     "@commitlint/config-conventional": "17.4.2",
     "@defi-wonderland/crypto-husky-checks": "0.0.0-29a10090",
-    "@defi-wonderland/prophet-core-abi": "0.0.0-bb56cdd7",
+    "@defi-wonderland/prophet-core-abi": "0.0.0-59a5e3ee",
     "@nomicfoundation/hardhat-chai-matchers": "2.0.0",
     "@nomicfoundation/hardhat-ethers": "3.0.0",
     "@nomicfoundation/hardhat-network-helpers": "1.0.0",
