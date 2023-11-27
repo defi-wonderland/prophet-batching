@@ -7,17 +7,18 @@ import {IOracle} from '@defi-wonderland/prophet-core-abi/solidity/interfaces/IOr
  * @title BatchDisputeData contract
  * @notice This contract retrieves the disputes for a range of requests
  */
-
 contract BatchDisputesData {
   struct DisputeWithId {
     bytes32 disputeId;
-    uint256 createdAt;
     bytes32 responseId;
+    uint256 disputeCreatedAt;
+    uint256 responseCreatedAt;
     IOracle.DisputeStatus status;
   }
 
   struct DisputeData {
     bytes32 requestId;
+    uint256 requestCreatedAt;
     bool isFinalized;
     DisputeWithId[] disputes;
   }
@@ -29,8 +30,6 @@ contract BatchDisputesData {
 
     for (uint256 _i = 0; _i < _requestsIds.length; _i++) {
       bytes32 _requestId = _requestsIds[_i];
-      _returnData[_i].requestId = _requestsIds[_i];
-      _returnData[_i].isFinalized = _oracle.finalizedAt(_requestId) != 0;
       bytes32[] memory _responseIds = _oracle.getResponseIds(_requestsIds[_i]);
 
       DisputeWithId[] memory _disputes = new DisputeWithId[](_responseIds.length);
@@ -40,12 +39,16 @@ contract BatchDisputesData {
         bytes32 _disputeId = _oracle.disputeOf(_responseId);
         _disputes[_j] = DisputeWithId({
           disputeId: _disputeId,
-          createdAt: _oracle.createdAt(_disputeId),
           responseId: _responseId,
+          disputeCreatedAt: _oracle.createdAt(_disputeId),
+          responseCreatedAt: _oracle.createdAt(_responseId),
           status: _oracle.disputeStatus(_disputeId)
         });
       }
 
+      _returnData[_i].requestId = _requestId;
+      _returnData[_i].requestCreatedAt = _oracle.createdAt(_requestId);
+      _returnData[_i].isFinalized = _oracle.finalizedAt(_requestId) != 0;
       _returnData[_i].disputes = _disputes;
     }
 
