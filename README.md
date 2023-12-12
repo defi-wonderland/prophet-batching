@@ -22,7 +22,7 @@ If you're unfamiliar with how RPC batching works, please read [this thread](http
 yarn add @defi-wonderland/prophet-batching-abi
 ```
 
-2. Import the bytecode and fetch the data. Check [the SDK repo](https://github.com/defi-wonderland/prophet-sdk-private/tree/dev/src/batching) for examples of this.
+2. Import the bytecode and fetch the data. Check [the SDK repo](https://github.com/defi-wonderland/prophet-sdk/tree/dev/src/batching) for examples of this.
 
 ## Licensing
 
