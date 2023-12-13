@@ -1,5 +1,8 @@
 # Prophet Batching Contracts
 
+[![Version](https://img.shields.io/npm/v/@defi-wonderland/prophet-batching-abi?label=Version&tag=latest)](https://www.npmjs.com/package/@defi-wonderland/prophet-batching-abi)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/defi-wonderland/prophet-batching/blob/dev/LICENSE)
+
 This repository contains Prophet contracts for batching the RPC calls.
 
 If you're unfamiliar with how RPC batching works, please read [this thread](https://twitter.com/libevm/status/1610214982452449280).
@@ -19,7 +22,7 @@ If you're unfamiliar with how RPC batching works, please read [this thread](http
 yarn add @defi-wonderland/prophet-batching-abi
 ```
 
-2. Import the bytecode and fetch the data. Check [the SDK repo](https://github.com/defi-wonderland/prophet-sdk-private/tree/dev/src/batching) for examples of this.
+2. Import the bytecode and fetch the data. Check [the SDK repo](https://github.com/defi-wonderland/prophet-sdk/tree/dev/src/batching) for examples of this.
 
 ## Licensing
 
